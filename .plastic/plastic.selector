@@ -1,0 +1,4 @@
+repository "AtariControllerAssignment@caiomonazzi@cloud"
+  path "/"
+    br "/main"
+    co "/main"
