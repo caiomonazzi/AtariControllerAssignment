@@ -13,7 +13,20 @@ public class Fluid : MonoBehaviour
     [SerializeField] private bool changeMass; // New boolean field
     [SerializeField] private float mass;
 
+    [SerializeField] private bool hasHitSound; // Determines if a hit sound should be played
+    [SerializeField] private AudioClip hitSound; // Sound to play when the player hits the fluid
+
+    [SerializeField] private bool hasLoopSound; // Determines if a loop sound should be played while the player is in the fluid
+    [SerializeField] private AudioClip loopSound; // Loopable sound to play while the player is in the fluid
+    private AudioSource audioSource;
+
+
     private bool isInFluid = false;
+
+    private void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -40,6 +53,18 @@ public class Fluid : MonoBehaviour
                 if (doDamage)
                 {
                     StartCoroutine(ApplyDamageOverTime(character));
+                }
+
+                if (hasHitSound && hitSound != null)
+                {
+                    audioSource.PlayOneShot(hitSound);
+                }
+
+                if (hasLoopSound && loopSound != null)
+                {
+                    audioSource.clip = loopSound;
+                    audioSource.loop = true;
+                    audioSource.Play();
                 }
             }
         }
@@ -72,6 +97,11 @@ public class Fluid : MonoBehaviour
 
                 character.runSpeed = character.originalRunSpeed;
                 character.walkSpeed = character.originalWalkSpeed;
+
+                if (hasLoopSound && audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
             }
         }
     }

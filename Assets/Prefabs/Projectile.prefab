@@ -168,10 +168,10 @@ MonoBehaviour:
   amountPropulsion: 100
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   propulsionType: 0
   target: {fileID: 0}
 --- !u!95 &-7201186388726736123
