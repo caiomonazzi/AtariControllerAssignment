@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 58b4caa647497c944b737a366ee9040d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 147044
+  packageName: Basic Platformer Template
+  packageVersion: 1.1
+  assetPath: Assets/Basic Platformer Template/Scripts/Characters/Adventurer/Adventurer.cs
+  uploadId: 518749
