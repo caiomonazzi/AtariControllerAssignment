@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 2249e34ff574b624d8abc4d772c9151a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 150
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 147044
+  packageName: Basic Platformer Template
+  packageVersion: 1.1
+  assetPath: Assets/Basic Platformer Template/Scripts/Characters/Adventurer/CharacterController.cs
+  uploadId: 518749
