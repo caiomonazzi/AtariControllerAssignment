@@ -140,7 +140,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cobblestone_3_0: -4857148488151916738
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
