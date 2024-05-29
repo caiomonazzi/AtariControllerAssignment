@@ -14,9 +14,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private AudioSource loopSource;
     [SerializeField] private AudioClip musicSoundtrack;
 
-    [SerializeField] public AudioSource sfxSource;
+    [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioClip coinPickupClip;
-
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip walkClip;
     [SerializeField] private AudioClip idleClip;
@@ -33,7 +32,7 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         InitializeSingleton();
-        //       PlayBackgroundMusic();
+        PlayBackgroundMusic();
     }
 
     private void Update()
