@@ -17,7 +17,7 @@ MonoBehaviour:
   attackSpeed: 50
   range: 50
   projectilePrefab: {fileID: 5943262186935353010, guid: ac16901a4b1234d44a8f42ae6321fc5f, type: 3}
-  weaponSprite: {fileID: 7482667652216324306, guid: 66ba36f8241f3834c9c1c1d219e2a84f, type: 3}
+  weaponSprite: {fileID: -3753825769889500098, guid: 310c5ded3f17606448a73c8965f26887, type: 3}
   propulsionType: 0
   amountPropulsion: 50
   switchTime: 10

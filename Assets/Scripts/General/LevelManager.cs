@@ -33,7 +33,7 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         InitializeSingleton();
-        //       PlayBackgroundMusic();
+        PlayBackgroundMusic();
     }
 
     private void Update()

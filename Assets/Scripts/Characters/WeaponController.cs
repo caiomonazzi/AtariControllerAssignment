@@ -26,8 +26,9 @@ public class WeaponController : MonoBehaviour
     private SpriteRenderer shootingPointSpriteRenderer;
     private AttackController attackController;
     private Coroutine switchWeaponCoroutine;
-    private Weapon currentWeapon;
+    public Weapon currentWeapon;
     private bool hasWeapon = false;
+
 
     private void Awake()
     {
