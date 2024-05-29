@@ -1,6 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
+public struct Rigidbody2DParameters
+{
+    public RigidbodyType2D bodyType;
+    public PhysicsMaterial2D material;
+    public bool simulated;
+    public bool useAutoMass;
+    public float mass;
+    public float linearDrag;
+    public float angularDrag;
+    public float gravityScale;
+    public CollisionDetectionMode2D collisionDetectionMode;
+    public RigidbodyInterpolation2D interpolation;
+    public RigidbodyConstraints2D constraints;
+    public bool isKinematic;
+}
+
 public class Controller : MonoBehaviour
 {
     #region Variables
@@ -14,7 +31,9 @@ public class Controller : MonoBehaviour
     [SerializeField] private Transform m_GroundCheck; // A position marking where to check if the player is grounded.
     [SerializeField] private Transform m_CeilingCheck; // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider; // A collider that will be disabled when crouching
-    [SerializeField] private Transform attackPoint; // Reference to the attack point
+
+    private Rigidbody2DParameters originalRigidbody2DParameters;
+    private Rigidbody2D m_Rigidbody2D;
 
     public bool onLadder = false;
 
@@ -22,8 +41,7 @@ public class Controller : MonoBehaviour
     private const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded; // Whether or not the player is grounded.
     private const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
-    private Rigidbody2D m_Rigidbody2D;
-    private bool m_FacingRight = true; // For determining which way the player is currently facing.
+
     private Vector3 m_Velocity = Vector3.zero;
     private float timeBeforeGroundCheck = 0f;
 
@@ -48,6 +66,7 @@ public class Controller : MonoBehaviour
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        StoreRigidbody2DParameters();
 
         if (OnLandEvent == null)
             OnLandEvent = new UnityEvent();
@@ -55,6 +74,7 @@ public class Controller : MonoBehaviour
         if (OnCrouchEvent == null)
             OnCrouchEvent = new BoolEvent();
     }
+
 
     private void Update()
     {
@@ -87,6 +107,10 @@ public class Controller : MonoBehaviour
     #endregion
 
     #region Public Methods
+    public Rigidbody2DParameters GetOriginalRigidbody2DParameters()
+    {
+        return originalRigidbody2DParameters;
+    }
 
     public void Move(float move, bool crouch, bool jump)
     {
@@ -96,7 +120,6 @@ public class Controller : MonoBehaviour
         if (m_Grounded || m_AirControl)
         {
             HandleMovement(move, crouch);
-            HandleFlip(move);
         }
 
         // If the player should jump...
@@ -119,6 +142,22 @@ public class Controller : MonoBehaviour
     #endregion
 
     #region Private Methods
+    private void StoreRigidbody2DParameters()
+    {
+        originalRigidbody2DParameters.bodyType = m_Rigidbody2D.bodyType;
+        originalRigidbody2DParameters.material = m_Rigidbody2D.sharedMaterial;
+        originalRigidbody2DParameters.simulated = m_Rigidbody2D.simulated;
+        originalRigidbody2DParameters.useAutoMass = m_Rigidbody2D.useAutoMass;
+        originalRigidbody2DParameters.mass = m_Rigidbody2D.mass;
+        originalRigidbody2DParameters.linearDrag = m_Rigidbody2D.drag;
+        originalRigidbody2DParameters.angularDrag = m_Rigidbody2D.angularDrag;
+        originalRigidbody2DParameters.gravityScale = m_Rigidbody2D.gravityScale;
+        originalRigidbody2DParameters.collisionDetectionMode = m_Rigidbody2D.collisionDetectionMode;
+        originalRigidbody2DParameters.interpolation = m_Rigidbody2D.interpolation;
+        originalRigidbody2DParameters.constraints = m_Rigidbody2D.constraints;
+        originalRigidbody2DParameters.isKinematic = m_Rigidbody2D.isKinematic;
+    }
+
 
     private void HandleCrouch(ref bool crouch)
     {
@@ -168,41 +207,6 @@ public class Controller : MonoBehaviour
         Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
         // And then smoothing it out and applying it to the character
         m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
-    }
-
-    private void HandleFlip(float move)
-    {
-        // If the input is moving the player right and the player is facing left...
-        if (move > 0 && !m_FacingRight)
-        {
-            // ... flip the player.
-            Flip();
-        }
-        // Otherwise if the input is moving the player left and the player is facing right...
-        else if (move < 0 && m_FacingRight)
-        {
-            // ... flip the player.
-            Flip();
-        }
-    }
-
-    private void Flip()
-    {
-        // Switch the way the player is labelled as facing.
-        m_FacingRight = !m_FacingRight;
-
-        // Multiply the player's x local scale by -1.
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-
-        // Flip the attackPoint
-        if (attackPoint != null)
-        {
-            Vector3 attackPos = attackPoint.localPosition;
-            attackPos.x *= -1;
-            attackPoint.localPosition = attackPos;
-        }
     }
 
     #endregion

@@ -1,4 +1,4 @@
 repository "AtariControllerAssignment@caiomonazzi@cloud"
   path "/"
-    br "/main"
-    co "/main"
+    smartbranch "/main" changeset "10"    
+     
