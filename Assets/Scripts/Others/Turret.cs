@@ -39,7 +39,7 @@ public class Turret : MonoBehaviour
             FindTarget();
         }
 
-        if (target != null)
+        if (target != null && Vector3.Distance(transform.position, target.position) <= range)
         {
             if (isStatic)
             {
@@ -50,7 +50,7 @@ public class Turret : MonoBehaviour
                 MoveTowardsTarget();
             }
 
-            if (fireCountdown <= 0f && Vector3.Distance(transform.position, target.position) <= range)
+            if (fireCountdown <= 0f)
             {
                 Fire();
                 fireCountdown = 1f / fireRate;
@@ -61,9 +61,15 @@ public class Turret : MonoBehaviour
 
         if (!isStatic)
         {
+            MoveForward();
             CheckGround();
             CheckIfStuck();
         }
+    }
+
+    private void MoveForward()
+    {
+        rb.velocity = new Vector2((isFacingRight ? 1 : -1) * walkSpeed, rb.velocity.y);
     }
 
     private void FindTarget()
