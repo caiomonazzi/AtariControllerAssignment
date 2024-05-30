@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Turret : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public enum State { Idle, Patrolling, Targeting, Attacking }
     [SerializeField] private State currentState = State.Idle; // Current state of the turret, serialized for debugging
