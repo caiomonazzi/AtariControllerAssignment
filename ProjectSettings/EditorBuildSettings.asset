@@ -5,7 +5,23 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Start Menu.unity
+    guid: 5364119e740945b46aa1f3ab7133afee
+  - enabled: 1
+    path: Assets/Scenes/Level 1.unity
+    guid: 02b3712322766ec43a2918b8e78bec0d
+  - enabled: 1
+    path: Assets/Scenes/OptionMenu.unity
+    guid: 08ba5024bc4a17d408c9db855f8fcfef
+  - enabled: 1
+    path: Assets/Scenes/YOU WIN.unity
+    guid: 99a96418789a05940aa0788de95ef675
+  - enabled: 1
+    path: Assets/Scenes/GAME OVER.unity
+    guid: f168bae4dfab9f7479bc80c316417b3e
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
