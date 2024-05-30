@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Slime_Idle
+  m_Name: Enemy_Attack
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 6682612058023506880, guid: 2074b40707c49ef42b577e7a2660d42a, type: 3}
+      value: {fileID: 7482667652216324306, guid: 66ba36f8241f3834c9c1c1d219e2a84f, type: 3}
     - time: 1
-      value: {fileID: 6682612058023506880, guid: 2074b40707c49ef42b577e7a2660d42a, type: 3}
+      value: {fileID: 7482667652216324306, guid: 66ba36f8241f3834c9c1c1d219e2a84f, type: 3}
     attribute: m_Sprite
-    path: Sprite
+    path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -37,7 +37,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 850496168
+      path: 0
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -46,8 +46,8 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 6682612058023506880, guid: 2074b40707c49ef42b577e7a2660d42a, type: 3}
-    - {fileID: 6682612058023506880, guid: 2074b40707c49ef42b577e7a2660d42a, type: 3}
+    - {fileID: 7482667652216324306, guid: 66ba36f8241f3834c9c1c1d219e2a84f, type: 3}
+    - {fileID: 7482667652216324306, guid: 66ba36f8241f3834c9c1c1d219e2a84f, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -72,4 +72,18 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.13333334
+    functionName: Hit
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1
+    functionName: StopAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

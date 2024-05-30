@@ -3,6 +3,7 @@
 public class HealthController : MonoBehaviour
 {
     #region Variables
+    public Transform respawnPoint; // Respawn point
 
     public int maxLife = 100; // Maximum life.
     public int health = 0; // Current life.
@@ -73,7 +74,7 @@ public class HealthController : MonoBehaviour
     {
         isDead = true;
         animator.SetBool("IsDead", isDead);
-        GetComponent<Collider2D>().enabled = false;
+        // GetComponent<Collider2D>().enabled = false;
     }
 
     public void LaunchHealthEvent()
@@ -121,12 +122,35 @@ public class HealthController : MonoBehaviour
         health = 0;
         Death();
         OnDeath?.Invoke();
-        Destroy(gameObject, 2f); // Destroy the game object after 2 seconds
+        // Destroy(gameObject, 1f); // Destroy the game object after 2 seconds
+        // Instead of destroying the player, reset its health and position
+        Respawn();
+
     }
 
     private void HandleHurt(bool h)
     {
         Hurt(h);
+    }
+
+    private void Respawn()
+    {
+        // Reset the player's health
+        health = maxLife;
+        isDead = false;
+        GetComponent<Collider2D>().enabled = true;
+        animator.SetBool("IsDead", isDead);
+
+        // Move the player to the respawn point
+        if (respawnPoint != null)
+        {
+            transform.position = respawnPoint.position;
+        }
+        else
+        {
+            Debug.LogWarning("Respawn point is not set.");
+        }
+
     }
 
     #endregion
