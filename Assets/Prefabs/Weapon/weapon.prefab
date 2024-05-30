@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 11400000, guid: b29755872aaf70a4a864c1617a96c202, type: 2}
+  pickupSound: {fileID: 8300000, guid: 864b50afe3ec0844faa3d38d60387902, type: 3}
 --- !u!1 &5631629815778189049
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private HealthController healthController;
+    private bool isDead = false;
     public enum State { Idle, Patrolling, Targeting, Attacking }
     [SerializeField] private State currentState = State.Idle; // Current state of the turret, serialized for debugging
 
@@ -22,6 +24,10 @@ public class Enemy : MonoBehaviour
     private float fireCountdown = 0f; // Countdown timer for firing
     private AudioSource audioSource;
     public AudioClip fireSound; // Sound to play when firing
+    public AudioClip deathSound; // Sound to play when the enemy dies
+
+    public bool shouldDropItems; // Should this enemy drop items when it dies
+    public GameObject[] dropItems; // Array of items to drop when the enemy dies
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -36,6 +42,12 @@ public class Enemy : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
+        healthController = GetComponent<HealthController>();
+
+        if (healthController != null)
+        {
+            healthController.OnDeath += Die;
+        }
         lastPosition = transform.position;
         initialPosition = transform.position; // Store the initial position
     }
@@ -43,6 +55,7 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         FindTarget();
+        CheckGround(); // Always check if the enemy is grounded
 
         switch (currentState)
         {
@@ -59,11 +72,13 @@ public class Enemy : MonoBehaviour
                 }
                 else
                 {
-                    MoveForward();
-                    CheckGround();
-                    CheckFront();
-                    CheckIfStuck();
-                    StayWithinRadius();
+                    if (isGrounded) // Only move if grounded
+                    {
+                        MoveForward();
+                        CheckFront();
+                        CheckIfStuck();
+                        StayWithinRadius();
+                    }
                 }
                 break;
             case State.Targeting:
@@ -158,19 +173,37 @@ public class Enemy : MonoBehaviour
     {
         isFacingRight = !isFacingRight;
 
+        // Log the scale before flipping
+        // Debug.Log("Enemy scale before flip: " + transform.localScale);
+
+        // Multiply the enemy's x local scale by -1.
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
 
-        Vector3 firePointScale = firePoint.localScale;
-        firePointScale.x *= -1;
-        firePoint.localScale = firePointScale;
+        // Log the scale after flipping
+        // Debug.Log("Enemy scale after setting: " + transform.localScale);
+
+        // Flip the firePoint
+        if (firePoint != null)
+        {
+            // Debug.Log("Before Flip: firePoint local scale: " + firePoint.localScale);
+
+            // Multiply the firePoint's x local scale by -1.
+            Vector3 firePointScale = firePoint.localScale;
+            firePointScale.x *= -1;
+            firePoint.localScale = firePointScale;
+
+            // Log the scale after flipping
+            // Debug.Log("After Flip: firePoint local scale: " + firePoint.localScale);
+        }
     }
 
     private void CheckGround()
     {
         RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.2f, groundLayer);
-        if (hit.collider == null)
+        isGrounded = hit.collider != null; // Set isGrounded based on the ground check
+        if (!isGrounded)
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
             Flip();
@@ -228,6 +261,54 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(frontCheck.position, 0.25f);
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(initialPosition, patrolRadius); // Draw the patrol radius
+        Gizmos.DrawWireSphere(this.gameObject.transform.position, patrolRadius); // Draw the patrol radius
+    }
+
+    private void Die()
+    {
+        if (isDead) return;
+
+        isDead = true;
+        rb.velocity = Vector2.zero;
+
+        // Play death sound
+        PlaySound(deathSound);
+
+        // Drop items if applicable
+        if (shouldDropItems)
+        {
+            DropItems();
+        }
+
+        Destroy(gameObject); // Destroy the enemy game object
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null && LevelManager.Instance != null && LevelManager.Instance.sfxSource != null)
+        {
+            LevelManager.Instance.sfxSource.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.LogWarning("Sound clip or LevelManager's sfxSource is missing.");
+        }
+    }
+
+    private void DropItems()
+    {
+        if (dropItems.Length > 0)
+        {
+            foreach (GameObject item in dropItems)
+            {
+                Instantiate(item, transform.position, Quaternion.identity);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No drop items assigned to Enemy.");
+        }
     }
 }
+
+

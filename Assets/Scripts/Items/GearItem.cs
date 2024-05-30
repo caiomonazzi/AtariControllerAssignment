@@ -10,7 +10,7 @@ public class GearItem : ScriptableObject
     public float walkSpeed = 5f;
     public bool changeMass;
     public float mass;
-    public AudioClip hitSound;
+    public AudioClip loopSound; // Loop sound to play while the gear is held
     public float duration = 5f; // Duration the gear item will be active
     public Sprite gearSprite; // Sprite for the gear
 }

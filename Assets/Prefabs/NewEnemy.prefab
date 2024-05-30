@@ -128,7 +128,13 @@ MonoBehaviour:
     m_Bits: 8
   isStatic: 0
   walkSpeed: 2
+  patrolRadius: 10
   fireSound: {fileID: 8300000, guid: a924292fd5c81244d9ea4977cf1380b2, type: 3}
+  deathSound: {fileID: 8300000, guid: 59075fbd891d7504196551f476d902a8, type: 3}
+  shouldDropItems: 1
+  dropItems:
+  - {fileID: 8347974933269333934, guid: 48394712eeeda0940ad401358f662cb9, type: 3}
+  - {fileID: 3107448470015743440, guid: a436ed187f2fdaf4c81bcaa367b01137, type: 3}
 --- !u!50 &4560037637336504407
 Rigidbody2D:
   serializedVersion: 4
@@ -361,7 +367,7 @@ Transform:
   m_GameObject: {fileID: 8427822664834528138}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.642, y: -0.304, z: 0}
+  m_LocalPosition: {x: 0.8, y: -0.304, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -393,7 +399,7 @@ Transform:
   m_GameObject: {fileID: 8999025253276344173}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.038, z: 0}
   m_LocalScale: {x: -0.22, y: 0.265, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

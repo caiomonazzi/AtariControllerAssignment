@@ -12,6 +12,8 @@ public class PlatformMovement : MonoBehaviour
 
     public bool flip = false; // Does the object flip when it comes back?
     public bool teleport = false; // Does the platform teleport the player to a predefined destination?
+    public AudioClip teleportSound; // Sound to play when the player is teleported
+    private AudioSource audioSource; // AudioSource to play the teleport sound
 
     public bool isVertical = false; // Move vertically if true, horizontally if false
     public bool movePositiveDirection = true; // Move in the positive direction (right or up) if true, negative direction (left or down) if false
@@ -33,6 +35,7 @@ public class PlatformMovement : MonoBehaviour
         flipSpeed = speed * 0.01f;
         InitializeOrigin();
         CalculateTarget();
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     private void Start()
@@ -156,6 +159,12 @@ public class PlatformMovement : MonoBehaviour
         if (playerOnPlatform != null)
         {
             playerOnPlatform.position = teleportDestination;
+            // Play teleport sound
+            if (teleportSound != null)
+            {
+                audioSource.PlayOneShot(teleportSound);
+            }
+
             DetachPlayer(playerOnPlatform);
         }
     }

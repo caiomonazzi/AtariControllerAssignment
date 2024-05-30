@@ -145,3 +145,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gearItem: {fileID: 11400000, guid: 8e274754d7f7d9446a658fbe7cf4b647, type: 2}
+  pickupSound: {fileID: 8300000, guid: 864b50afe3ec0844faa3d38d60387902, type: 3}

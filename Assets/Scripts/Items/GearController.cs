@@ -14,6 +14,7 @@ public class GearController : MonoBehaviour
     {
         character = GetComponent<Character>();
         audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.loop = true; // Ensure the audio source is set to loop
     }
 
     private void Start()
@@ -47,10 +48,13 @@ public class GearController : MonoBehaviour
         rb.gravityScale = gear.gravityScale;
         rb.drag = gear.drag;
 
-        if (gear.hitSound != null)
+        // Play loop sound if assigned
+        if (gear.loopSound != null)
         {
-            audioSource.PlayOneShot(gear.hitSound);
+            audioSource.clip = gear.loopSound;
+            audioSource.Play();
         }
+
 
         // Change the gear sprite
         if (character.gearHolder != null)
