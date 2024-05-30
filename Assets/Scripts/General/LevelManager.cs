@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private AudioClip idleClip;
     [SerializeField] private AudioClip runClip;
     [SerializeField] private AudioClip attackClip;
+    [SerializeField] private AudioClip hurtClip;
     [SerializeField] private AudioClip dieClip;
 
     private int coins = 0; // Amount of coins collected.
@@ -66,14 +67,14 @@ public class LevelManager : MonoBehaviour
         if (amount > 0)
         {
             PlayCoinPickupSound();
-            Debug.Log($"Adding coins: {amount}");
+            // Debug.Log($"Adding coins: {amount}");
             UpdateCoinCount(amount);
         }
     }
 
     public void PlayWalkSound()
     {
-        PlaySoundEffect(walkClip);
+        PlayLoopingSound(walkClip);
     }
 
     public void PlayJumpSound()
@@ -83,17 +84,22 @@ public class LevelManager : MonoBehaviour
 
     public void PlayIdleSound()
     {
-        PlaySoundEffect(idleClip);
+        PlayLoopingSound(idleClip);
     }
 
     public void PlayRunSound()
     {
-        PlaySoundEffect(runClip);
+        PlayLoopingSound(runClip);
     }
 
     public void PlayAttackSound()
     {
         PlaySoundEffect(attackClip);
+    }
+
+    public void PlayHurtSound()
+    {
+        PlaySoundEffect(hurtClip);
     }
 
     public void PlayDieSound()
@@ -184,6 +190,20 @@ public class LevelManager : MonoBehaviour
         else
         {
             Debug.LogWarning("SFX Source or Clip not assigned in LevelManager.");
+        }
+    }
+
+    private void PlayLoopingSound(AudioClip clip)
+    {
+        if (loopSource != null && clip != null)
+        {
+            loopSource.clip = clip;
+            loopSource.loop = true;
+            loopSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Loop Source or Clip not assigned in LevelManager.");
         }
     }
 

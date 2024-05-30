@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 1679576473644312441}
   - component: {fileID: 1234567817673778983}
   - component: {fileID: 8096382546163947418}
+  - component: {fileID: 2060640008625348983}
   m_Layer: 7
   m_Name: NewEnemy
   m_TagString: Enemy
@@ -330,7 +331,7 @@ Animator:
   m_GameObject: {fileID: 8347838529817573861}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d3e383de3db41dc45a2932f81e00c831, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -342,6 +343,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2060640008625348983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8347838529817573861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bff784427021f149a036a183b5bc3d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  speed: 1
+  range: 1
+  attackPoint: {fileID: 2317484027435942027}
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 64
+  isAttacking: 0
 --- !u!1 &8427822664834528138
 GameObject:
   m_ObjectHideFlags: 0

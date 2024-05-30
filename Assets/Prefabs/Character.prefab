@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 114169494002934568}
   - component: {fileID: 6782824079091887285}
   - component: {fileID: 1410824644440586120}
+  - component: {fileID: 6249267468732299801}
   m_Layer: 6
   m_Name: Character
   m_TagString: Player
@@ -245,7 +246,7 @@ MonoBehaviour:
   staminaTime: 100
   doubleJump: 1
   attackPoint: {fileID: 4706544371114292}
-  gearHolder: {fileID: 0}
+  gearHolder: {fileID: 5617287622337273733}
   isFacingRight: 1
   isJumping: 0
 --- !u!114 &114786061896649252
@@ -289,7 +290,7 @@ MonoBehaviour:
   OnCrouchEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114208317006013580}
+      - m_Target: {fileID: 1967700575304692}
         m_TargetAssemblyTypeName: 
         m_MethodName: OnCrouching
         m_Mode: 0
@@ -400,6 +401,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 0.8862916}
   m_EdgeRadius: 0
+--- !u!114 &6249267468732299801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967700575304692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdec8be64d20cb4b97f33418ebb932e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1975730589640250
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,7 +555,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.051, y: -0.03, z: 0}
-  m_LocalScale: {x: 0.33, y: 0.33, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4055532924313396}
@@ -588,7 +601,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 605002692975911587, guid: 579b64d0604350342beca82c377520a4, type: 3}
+  m_Sprite: {fileID: 766232580549024637, guid: e017497e57e506f459a9a823cfdcf20f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

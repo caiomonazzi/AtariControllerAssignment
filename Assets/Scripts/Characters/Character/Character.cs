@@ -20,7 +20,7 @@ public class Character : MonoBehaviour
     [SerializeField] private bool doubleJump = true; // Enable for double jump.
     [SerializeField] public Transform attackPoint; // Reference to the attack point
     [SerializeField] public Transform gearHolder; // Reference to the gear holder
-    private bool canClim = false;
+    private bool canClimb = false;
     private int jumps = 0;
     private int maxJumps = 1;
     private float horizontalMove = 0f; // To what extent it moves horizontally.
@@ -150,6 +150,8 @@ public class Character : MonoBehaviour
         float speed = isRunning ? runSpeed : walkSpeed;
         horizontalMove = horizontalMove * speed;
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+
+
 
         if (Mathf.Abs(horizontalMove) != 0)
         {
@@ -353,11 +355,13 @@ public class Character : MonoBehaviour
         return character.GetOriginalRigidbody2DParameters();
     }
 
-    public void OnCrouching(bool isCrouching)
+    public void Crouching(bool isCrouching)
     {
         // Play crouch animation while crouching.
         animator.SetBool("IsCrouching", isCrouching);
+        animator.Play("Crouch");
     }
+
 
     public void AllowClimbing(bool allow)
     {

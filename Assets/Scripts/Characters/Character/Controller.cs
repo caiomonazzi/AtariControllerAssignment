@@ -115,7 +115,6 @@ public class Controller : MonoBehaviour
     public void Move(float move, bool crouch, bool jump)
     {
         HandleCrouch(ref crouch);
-
         // Only control the player if grounded or airControl is turned on
         if (m_Grounded || m_AirControl)
         {
@@ -189,6 +188,7 @@ public class Controller : MonoBehaviour
             // Disable one of the colliders when crouching
             if (m_CrouchDisableCollider != null)
                 m_CrouchDisableCollider.enabled = false;
+
         }
         else
         {

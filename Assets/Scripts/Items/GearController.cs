@@ -93,6 +93,9 @@ public class GearController : MonoBehaviour
         character.runSpeed = character.originalRunSpeed;
         character.walkSpeed = character.originalWalkSpeed;
 
+        // Stop the gear sound
+        StopGearSound();
+
         // Reset the gear sprite
         if (character.gearHolder != null)
         {
@@ -101,6 +104,14 @@ public class GearController : MonoBehaviour
             {
                 gearSpriteRenderer.sprite = null;
             }
+        }
+    }
+
+    private void StopGearSound()
+    {
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
         }
     }
 }
