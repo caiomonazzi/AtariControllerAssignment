@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 
 public class Slime : MonoBehaviour
 {
@@ -106,3 +106,4 @@ public class Slime : MonoBehaviour
 
     #endregion
 }
+*/

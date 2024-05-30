@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: weapon3
+  m_Name: TestWeapon
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  weaponName: hHAHHA
-  damage: 40
-  attackSpeed: 33
-  range: 33
+  weaponName: WeaponTest
+  damage: 15
+  attackSpeed: 15
+  range: 9
   projectilePrefab: {fileID: 5943262186935353010, guid: ac16901a4b1234d44a8f42ae6321fc5f, type: 3}
-  weaponSprite: {fileID: 3422849895820167655, guid: eca1ad0562c70f345a9acbf73e0bf6ff, type: 3}
+  weaponSprite: {fileID: -3753825769889500098, guid: 310c5ded3f17606448a73c8965f26887, type: 3}
   propulsionType: 0
-  amountPropulsion: 33
+  amountPropulsion: 100
   switchTime: 15

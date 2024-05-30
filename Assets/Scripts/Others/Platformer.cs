@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 
 public class Platformer : MonoBehaviour
 {
@@ -36,3 +36,4 @@ public class Platformer : MonoBehaviour
 
     #endregion
 }
+*/

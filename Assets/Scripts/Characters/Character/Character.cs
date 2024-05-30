@@ -19,6 +19,7 @@ public class Character : MonoBehaviour
     [SerializeField] private float staminaTime = 100f; // Run stamina time.
     [SerializeField] private bool doubleJump = true; // Enable for double jump.
     [SerializeField] public Transform attackPoint; // Reference to the attack point
+    [SerializeField] public Transform gearHolder; // Reference to the gear holder
     private bool canClim = false;
     private int jumps = 0;
     private int maxJumps = 1;
@@ -244,7 +245,16 @@ public class Character : MonoBehaviour
             // Log the scale after flipping
             Debug.Log("After Flip: attackPoint local scale: " + attackPoint.localScale);
         }
+
+        // Flip the gearHolder
+        if (gearHolder != null)
+        {
+            Vector3 gearScale = gearHolder.localScale;
+            gearScale.x *= -1;
+            gearHolder.localScale = gearScale;
+        }
     }
+
 
     #endregion
 
