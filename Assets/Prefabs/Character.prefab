@@ -239,11 +239,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
-  runSpeed: 40
-  walkSpeed: 20
+  runSpeed: 50
+  walkSpeed: 25
   originalRunSpeed: 0
   originalWalkSpeed: 0
-  staminaTime: 100
+  staminaTime: 0.7
   doubleJump: 1
   attackPoint: {fileID: 4706544371114292}
   gearHolder: {fileID: 5617287622337273733}
@@ -290,9 +290,9 @@ MonoBehaviour:
   OnCrouchEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1967700575304692}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnCrouching
+      - m_Target: {fileID: 114208317006013580}
+        m_TargetAssemblyTypeName: Character, Assembly-CSharp
+        m_MethodName: Crouching
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -314,6 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5567f34c6f45be644830f31ecaa2d067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   maxLife: 100
   health: 0
   isDead: 0

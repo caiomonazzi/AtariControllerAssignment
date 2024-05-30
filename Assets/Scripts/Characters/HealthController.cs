@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HealthController : MonoBehaviour
 {
     #region Variables
-    public Transform respawnPoint; // Respawn point
+    public bool isPlayer = false; // Flag to identify if this is the player
 
     public int maxLife = 100; // Maximum life.
     public int health = 0; // Current life.
@@ -74,7 +75,7 @@ public class HealthController : MonoBehaviour
     {
         isDead = true;
         animator.SetBool("IsDead", isDead);
-        // GetComponent<Collider2D>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
     }
 
     public void LaunchHealthEvent()
@@ -124,7 +125,14 @@ public class HealthController : MonoBehaviour
         OnDeath?.Invoke();
         // Destroy(gameObject, 1f); // Destroy the game object after 2 seconds
         // Instead of destroying the player, reset its health and position
-        Respawn();
+        if (isPlayer)
+        {
+            Respawn();
+        }
+        else
+        {
+            Destroy(gameObject, 1f); // Destroy the enemy game object after 1 second
+        }
 
     }
 
@@ -141,15 +149,7 @@ public class HealthController : MonoBehaviour
         GetComponent<Collider2D>().enabled = true;
         animator.SetBool("IsDead", isDead);
 
-        // Move the player to the respawn point
-        if (respawnPoint != null)
-        {
-            transform.position = respawnPoint.position;
-        }
-        else
-        {
-            Debug.LogWarning("Respawn point is not set.");
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     }
 

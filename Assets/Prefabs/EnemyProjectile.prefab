@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de8fdfa998eef44592689f78dc30e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 5
   speed: 100
   amountPropulsion: 100
   enemyLayer:

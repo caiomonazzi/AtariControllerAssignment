@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class LevelManager : MonoBehaviour
 {
     #region Variables
-    public static LevelManager Instance;
+    public static LevelManager Instance { get; private set; }
+    public Transform respawnPoint; // Assign this in the Inspector
+    public GameObject playerPrefab; // Assign the player prefab in the Inspector
+
 
     [SerializeField] private Text coinText;                     // Currency indicator.
     [SerializeField] private Image healthImage;                 // Health bar.
@@ -33,8 +37,27 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        InitializeSingleton();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         PlayBackgroundMusic();
+    }
+
+    private void Start()
+    {
+        if (healthController == null)
+        {
+            healthController = FindFirstObjectByType<HealthController>();
+        }
+
+        StartCoroutine(CheckAndRespawnPlayer());
     }
 
     private void Update()
@@ -124,7 +147,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void HandleSceneRestart()
+    public void HandleSceneRestart()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -147,12 +170,22 @@ public class LevelManager : MonoBehaviour
 
     private void SubscribeToHealthEvent()
     {
-        healthController.HealthEvent += AddHealth;
+        if (healthController != null)
+        {
+            healthController.HealthEvent += AddHealth;
+        }
+        else
+        {
+            Debug.LogWarning("HealthController is not assigned in LevelManager.");
+        }
     }
 
     private void UnsubscribeFromHealthEvent()
     {
-        healthController.HealthEvent -= AddHealth;
+        if (healthController != null)
+        {
+            healthController.HealthEvent -= AddHealth;
+        }
     }
 
     private void PlayBackgroundMusic()
@@ -204,6 +237,31 @@ public class LevelManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Loop Source or Clip not assigned in LevelManager.");
+        }
+    }
+
+    private IEnumerator CheckAndRespawnPlayer()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3f);
+
+            if (GameObject.FindGameObjectWithTag("Player") == null)
+            {
+                RespawnPlayer();
+            }
+        }
+    }
+
+    private void RespawnPlayer()
+    {
+        if (playerPrefab != null && respawnPoint != null)
+        {
+            Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogWarning("PlayerPrefab or RespawnPoint not assigned in LevelManager.");
         }
     }
 
