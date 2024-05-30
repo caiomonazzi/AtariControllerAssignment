@@ -19,6 +19,6 @@ MonoBehaviour:
   walkSpeed: 24
   changeMass: 1
   mass: 0.33
-  loopSound: {fileID: 8300000, guid: 9817ff4d17b0dfa4d9841d7cea8cc8fc, type: 3}
+  loopSound: {fileID: 0}
   duration: 20
   gearSprite: {fileID: -4548992743620234918, guid: 7601037161fbab64f963537381fd7d53, type: 3}
