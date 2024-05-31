@@ -25,10 +25,10 @@ public class Character : MonoBehaviour
     private int maxJumps = 1;
     private float horizontalMove = 0f; // To what extent it moves horizontally.
     public bool isFacingRight = true; // For determining which way the player is currently facing.
-    public bool isJumping = false;
-    private bool isCrouching = false;
-    private bool isRunning = false;
-    private bool isClimbing = false;
+    [SerializeField] public bool isJumping = false;
+    [SerializeField] private bool isCrouching = false;
+    [SerializeField] private bool isRunning = false;
+    [SerializeField] private bool isClimbing = false;
     private float verticalMove = 0f; // To what extent it moves vertically.
 
     private Rigidbody2D m_Rigidbody2D;
@@ -74,6 +74,20 @@ public class Character : MonoBehaviour
         HandleJumpInput();
         HandleAttackInput();
         HandleCrouchInput();
+        UpdateAnimator();
+
+    }
+
+    private void UpdateAnimator()
+    {
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+        animator.SetBool("IsRunning", isRunning);
+        animator.SetBool("IsJumping", isJumping);
+        animator.SetBool("IsCrouching", isCrouching);
+        animator.SetBool("IsAttacking", attack.isAttacking);
+        animator.SetBool("IsHurting", health.isHurting);
+        animator.SetBool("IsDead", health.isDead);
+        // Add more parameters as needed
     }
 
     private void FixedUpdate()
@@ -150,6 +164,7 @@ public class Character : MonoBehaviour
         float speed = isRunning ? runSpeed : walkSpeed;
         horizontalMove = horizontalMove * speed;
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+        animator.SetBool("IsRunning", isRunning);
 
 
 
@@ -311,6 +326,7 @@ public class Character : MonoBehaviour
 
         // Animator handles animations based on jump count.
         animator.SetInteger("Jumps", jumps);
+        animator.SetBool("IsJumping", isJumping);
     }
 
     public void Crouch(bool c)
@@ -319,6 +335,7 @@ public class Character : MonoBehaviour
 
         // Update crouch state.
         isCrouching = c;
+        animator.SetBool("IsCrouching", isCrouching);
     }
 
     public void Attack(bool a)
@@ -330,6 +347,11 @@ public class Character : MonoBehaviour
         if (a)
         {
             LevelManager.Instance.PlayAttackSound();
+            animator.SetBool("IsAttacking", true);
+        }
+        else
+        {
+            animator.SetBool("IsAttacking", false);
         }
     }
 
@@ -349,6 +371,7 @@ public class Character : MonoBehaviour
         // Restore jumps when touching the ground.
         Jump(false);
         isJumping = false; // Ensure jumping state is reset
+        animator.SetBool("IsJumping", false);
     }
     public Rigidbody2DParameters GetOriginalRigidbody2DParameters()
     {
@@ -365,7 +388,7 @@ public class Character : MonoBehaviour
 
     public void AllowClimbing(bool allow)
     {
-  //      canClimb = allow;
+        //canClimb = allow;
         isClimbing = false;
 
         if (allow)
@@ -384,6 +407,7 @@ public class Character : MonoBehaviour
 
     private void HandleDeath()
     {
+        animator.SetBool("IsDead", true);
         LevelManager.Instance.PlayDieSound();
     }
     #endregion

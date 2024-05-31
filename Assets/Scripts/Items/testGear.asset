@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0813616d7e3da3c4892ef90286ad00a3, type: 3}
   m_Name: testGear
   m_EditorClassIdentifier: 
-  gearName: Magneto
-  gravityScale: 1
-  drag: 5
-  runSpeed: 40
-  walkSpeed: 24
+  gearName: Floaty
+  gravityScale: -0.5
+  drag: 0
+  runSpeed: 50
+  walkSpeed: 50
   changeMass: 1
-  mass: 0.33
-  loopSound: {fileID: 8300000, guid: 9817ff4d17b0dfa4d9841d7cea8cc8fc, type: 3}
-  duration: 5
-  gearSprite: {fileID: -4548992743620234918, guid: 7601037161fbab64f963537381fd7d53, type: 3}
+  mass: 5
+  loopSound: {fileID: 8300000, guid: 05fdc7b12167b3a46abe9530bce32a63, type: 3}
+  duration: 2
+  gearSprite: {fileID: 3422849895820167655, guid: eca1ad0562c70f345a9acbf73e0bf6ff, type: 3}

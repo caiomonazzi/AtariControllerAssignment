@@ -2,7 +2,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public bool shouldRespawn = false; // Should the enemy respawn after dying
+    private EnemySpawner enemySpawner;
+    public float respawnDelay = 5f; // Delay before the enemy respawns
+
     private HealthController healthController;
+    private Animator animator; // Reference to the Animator component
     private bool isDead = false;
     public enum State { Idle, Patrolling, Targeting, Attacking }
     [SerializeField] private State currentState = State.Idle; // Current state of the turret, serialized for debugging
@@ -49,11 +54,13 @@ public class Enemy : MonoBehaviour
             healthController.OnDeath += Die;
         }
         lastPosition = transform.position;
-        initialPosition = transform.position; // Store the initial position
+        initialPosition = transform.position;
     }
 
     private void Update()
     {
+        if (isDead) return; // Prevent any interaction or actions while dead
+
         FindTarget();
         CheckGround(); // Always check if the enemy is grounded
 
@@ -82,17 +89,27 @@ public class Enemy : MonoBehaviour
                 }
                 break;
             case State.Targeting:
-                if (target != null && Vector3.Distance(transform.position, target.position) <= attackRange)
+                if (target != null)
                 {
-                    currentState = State.Attacking;
-                }
-                else if (target == null || Vector3.Distance(transform.position, target.position) > detectionRange)
-                {
-                    currentState = isStatic ? State.Idle : State.Patrolling;
+                    if (Vector3.Distance(transform.position, target.position) <= attackRange)
+                    {
+                        currentState = State.Attacking;
+                    }
+                    else
+                    {
+                        if (!isStatic)
+                        {
+                            ChaseTarget();
+                        }
+                        else
+                        {
+                            AimAtTarget();
+                        }
+                    }
                 }
                 else
                 {
-                    if (isStatic) AimAtTarget();
+                    currentState = isStatic ? State.Idle : State.Patrolling;
                 }
                 break;
             case State.Attacking:
@@ -153,7 +170,24 @@ public class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
-    private void Fire()
+    private void ChaseTarget()
+    {
+        if (target == null) return;
+
+        Vector3 direction = (target.position - transform.position).normalized;
+        rb.velocity = new Vector2(direction.x * walkSpeed, rb.velocity.y);
+
+        if (direction.x > 0 && !isFacingRight)
+        {
+            Flip();
+        }
+        else if (direction.x < 0 && isFacingRight)
+        {
+            Flip();
+        }
+    }
+
+        private void Fire()
     {
         GameObject projectileGO = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Projectile projectile = projectileGO.GetComponent<Projectile>();
@@ -274,13 +308,18 @@ public class Enemy : MonoBehaviour
         // Play death sound
         PlaySound(deathSound);
 
+        gameObject.SetActive(false); // Deactivate the enemy game object
+
         // Drop items if applicable
         if (shouldDropItems)
         {
             DropItems();
         }
 
-        Destroy(gameObject); // Destroy the enemy game object
+        if (shouldRespawn)
+        {
+            EnemySpawner.Instance.RespawnEnemy(this, initialPosition, respawnDelay);
+        }
     }
 
     private void PlaySound(AudioClip clip)
@@ -308,6 +347,16 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogWarning("No drop items assigned to Enemy.");
         }
+    }
+
+    public void ResetState()
+    {
+        isDead = false;
+        currentState = State.Idle;
+        healthController.ResetHealth();
+        animator.Rebind();
+        animator.Update(0f);
+        rb.velocity = Vector2.zero;
     }
 }
 

@@ -38,10 +38,8 @@ public class HealthController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (health - amount > health) return; // Prevent invalid damage application
-
+        if (health - amount < 0) return; 
         ApplyDamage(amount);
-
         if (health <= 0)
         {
             HandleDeath();
@@ -50,13 +48,12 @@ public class HealthController : MonoBehaviour
         {
             HandleHurt(true);
         }
-
         LaunchHealthEvent();
     }
 
     public void Heal(int amount)
     {
-        if (health + amount < health) return; // Prevent invalid healing application
+        if (health + amount < health) return; 
 
         ApplyHeal(amount);
         LaunchHealthEvent();
@@ -123,16 +120,7 @@ public class HealthController : MonoBehaviour
         health = 0;
         Death();
         OnDeath?.Invoke();
-        // Destroy(gameObject, 1f); // Destroy the game object after 2 seconds
-        // Instead of destroying the player, reset its health and position
-        if (isPlayer)
-        {
-            Respawn();
-        }
-        else
-        {
-            Destroy(gameObject, 1f); // Destroy the enemy game object after 1 second
-        }
+
 
     }
 
@@ -141,17 +129,21 @@ public class HealthController : MonoBehaviour
         Hurt(h);
     }
 
-    private void Respawn()
+    public void ResetHealth()
     {
-        // Reset the player's health
         health = maxLife;
         isDead = false;
+        isHurting = false;
         GetComponent<Collider2D>().enabled = true;
-        animator.SetBool("IsDead", isDead);
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
     }
 
+    public void ResetAnimator()
+    {
+        if (animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
+    }
     #endregion
 }

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: TestWeapon
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   weaponName: WeaponTest
-  damage: 15
-  attackSpeed: 15
-  range: 9
+  damage: 25
+  attackSpeed: 10
+  range: 15
   projectilePrefab: {fileID: 5943262186935353010, guid: ac16901a4b1234d44a8f42ae6321fc5f, type: 3}
   weaponSprite: {fileID: -3753825769889500098, guid: 310c5ded3f17606448a73c8965f26887, type: 3}
   propulsionType: 0
-  amountPropulsion: 100
-  switchTime: 15
+  amountPropulsion: 1
+  switchTime: 16

@@ -20,14 +20,16 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] public AudioSource sfxSource;
     [SerializeField] private AudioClip coinPickupClip;
+    [SerializeField] private AudioClip attackClip;
+    [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private AudioClip dieClip;
 
+    // [ still implementing]
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip walkClip;
     [SerializeField] private AudioClip idleClip;
     [SerializeField] private AudioClip runClip;
-    [SerializeField] private AudioClip attackClip;
-    [SerializeField] private AudioClip hurtClip;
-    [SerializeField] private AudioClip dieClip;
+
 
     private int coins = 0; // Amount of coins collected.
 
@@ -130,23 +132,6 @@ public class LevelManager : MonoBehaviour
         PlaySoundEffect(dieClip);
     }
 
-    #endregion
-
-    #region Private Methods
-
-    private void InitializeSingleton()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     public void HandleSceneRestart()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -154,6 +139,10 @@ public class LevelManager : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
+
+    #endregion
+
+    #region Private Methods
 
     private void UpdateHealthBar(int health)
     {
@@ -173,12 +162,14 @@ public class LevelManager : MonoBehaviour
         if (healthController != null)
         {
             healthController.HealthEvent += AddHealth;
+            healthController.OnDeath += healthController.OnDeath;
         }
         else
         {
             Debug.LogWarning("HealthController is not assigned in LevelManager.");
         }
     }
+
 
     private void UnsubscribeFromHealthEvent()
     {
@@ -245,7 +236,6 @@ public class LevelManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(3f);
-
             if (GameObject.FindGameObjectWithTag("Player") == null)
             {
                 RespawnPlayer();
